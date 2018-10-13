@@ -1,0 +1,60 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
+
+/* from_rod stands for the beginning rod
+    to_rod would stand for the end rod
+    aux_rod stands for auxillary, which is a temporary storage space for the movement of pegs from the start to the end
+*/
+void towerOfHanoi(int disks, char from_rod, char to_rod, char aux_rod)
+{
+    //base case, if someone tries to input 0 number of disks
+    if (disks == 0) {
+        cout << "You must have at least one disk..  ";
+        return;
+    }
+    //base case, there is only one disk
+    //Or case in which disk - 1 == 1, print final movement
+    if (disks == 1) {
+        cout << "\n Move disk 1 from rod " << from_rod << " to rod " << to_rod;
+        return;
+    }
+    /* shift n - 1 disks from one peg to next
+       shifts last disk from 'peg' to 'peg'
+       swaps the first two recursive calls and decreases disks by 1
+    */
+    towerOfHanoi(disks-1, from_rod, aux_rod, to_rod);
+    //print movements of peg from rod to rod
+    cout << "\n Move disk " << disks << " from rod " << from_rod << " to rod " << to_rod;
+
+    //recursively call function of last stored peg, and move to updated peg
+    towerOfHanoi(disks-1, aux_rod, to_rod, from_rod);
+}
+
+int main()
+{
+    //declare variables
+    int disks, numOfMoves;
+
+//User input for number of disks, store user input
+    cout << "How many disks do you want? ";
+    cin >> disks;
+
+//Calculating the number of moves required
+    numOfMoves = pow(2, disks) - 1;
+
+
+
+//print out number of moves needed
+    if (disks != 0) {
+        cout << "It took a total of " << numOfMoves << " moves.";
+        //cout << "It took a total of " << numOfFuncCall << " function calls."
+    }
+
+    //calling recursive function
+    //Characters of Rods are A, C, B
+    towerOfHanoi(disks, 'A', 'C', 'B');
+
+    return 0;
+}
